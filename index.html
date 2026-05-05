@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gustavo José da Luz | Portfólio</title>
+
+  <style>
+    /* =========================================================
+       VARIÁVEIS DE TEMA (claro padrão / escuro alternativo)
+       ========================================================= */
+    :root {
+      --bg:          #ffffff;
+      --text:        #222222;
+      --muted:       #555555;
+      --border:      #cccccc;
+      --nav-bg:      #2c3e50;
+      --nav-text:    #ffffff;
+      --accent:      #2c3e50;
+      --section-alt: #f5f7fa;
+      --card-bg:     #ffffff;
+      --btn-bg:      #2c3e50;
+      --btn-text:    #ffffff;
+    }
+
+    /* Tema escuro */
+    body.dark {
+      --bg:          #1a1a2e;
+      --text:        #e0e0e0;
+      --muted:       #aaaaaa;
+      --border:      #333355;
+      --nav-bg:      #0f0f23;
+      --nav-text:    #ffffff;
+      --accent:      #4da6ff;
+      --section-alt: #16213e;
+      --card-bg:     #1e1e3a;
+      --btn-bg:      #4da6ff;
+      --btn-text:    #000000;
+    }
+
+    /* =========================================================
+       RESET & BASE
+       ========================================================= */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* =========================================================
+       NAVEGAÇÃO FIXA
+       ========================================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 56px;
+    }
+
+    /* Links do menu (desktop) */
+    .nav-links {
+      display: flex;
+      list-style: none;
+    }
+
+    .nav-links a {
+      display: block;
+      color: var(--nav-text);
+      text-decoration: none;
+      padding: 0 1.2rem;
+      line-height: 56px;
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+
+    /* Link ativo e hover */
+    .nav-links a:hover,
+    .nav-links a.ativo {
+      background: rgba(255,255,255,0.15);
+    }
+
+    /* Botão de alternância de tema */
+    #btn-tema {
+      background: rgba(255,255,255,0.15);
+      color: var(--nav-text);
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+
+    #btn-tema:hover { background: rgba(255,255,255,0.25); }
+
+    /* Botão hamburguer (visível apenas em mobile) */
+    #btn-menu {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--nav-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Menu mobile (oculto por padrão) */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      top: 56px; left: 0; right: 0;
+      background: var(--nav-bg);
+      z-index: 99;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* Classe que exibe o menu mobile */
+    .mobile-menu.aberto { display: flex; }
+
+    .mobile-menu a {
+      color: var(--nav-text);
+      text-decoration: none;
+      padding: 1rem 2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.95rem;
+      transition: background 0.2s;
+    }
+
+    .mobile-menu a:hover { background: rgba(255,255,255,0.1); }
+
+    /* =========================================================
+       SEÇÕES
+       ========================================================= */
+    section {
+      padding: 80px 2rem 60px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Cor de fundo alternada nas seções pares */
+    #formacao, #contato { background: var(--section-alt); }
+
+    /* Container central com largura máxima */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Título de cada seção */
+    h2 {
+      font-size: 1.8rem;
+      color: var(--text);
+      border-left: 4px solid var(--accent);
+      padding-left: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    p { line-height: 1.7; color: var(--muted); }
+
+    /* =========================================================
+       SEÇÃO 1 — SOBRE MIM
+       ========================================================= */
+    .sobre-grid {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    /* Avatar circular com emoji */
+    .avatar {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: var(--nav-bg);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      flex-shrink: 0;
+      border: 3px solid var(--border);
+    }
+
+    .sobre-info h1 {
+      font-size: 1.9rem;
+      margin-bottom: 0.3rem;
+      color: var(--text);
+    }
+
+    /* Cargo em destaque */
+    .cargo {
+      font-size: 1rem;
+      color: var(--accent);
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+    }
+
+    /* Chips de informações rápidas */
+    .info-linha {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    /* =========================================================
+       SEÇÃO 2 — FORMAÇÃO
+       ========================================================= */
+    /* Card de cada item de formação */
+    .formacao-item {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+      background: var(--card-bg);
+    }
+
+    .formacao-item h3 {
+      font-size: 1.05rem;
+      color: var(--text);
+      margin-bottom: 0.2rem;
+    }
+
+    .formacao-item .inst {
+      font-size: 0.88rem;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    .formacao-item .periodo {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* Subtítulo interno de seção */
+    .subtitulo {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--text);
+      margin: 2rem 0 1rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+    }
+
+    /* Grade de habilidades */
+    .habilidades-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .habilidade {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      background: var(--card-bg);
+      font-size: 0.9rem;
+      color: var(--text);
+      text-align: center;
+    }
+
+    /* Linha de idioma com barra de nível */
+    .idioma {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      background: var(--card-bg);
+      margin-bottom: 0.5rem;
+    }
+
+    .idioma-nome { font-size: 0.9rem; color: var(--text); }
+
+    .nivel-barra {
+      width: 120px;
+      height: 8px;
+      background: var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .nivel-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 4px;
+    }
+
+    .nivel-texto {
+      font-size: 0.78rem;
+      color: var(--muted);
+      min-width: 50px;
+      text-align: right;
+    }
+
+    /* 
+       SEÇÃO 4 — CONTATO
+        */
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+    }
+
+    .contato-info h3 {
+      font-size: 1.1rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    /* Links de contato (e-mail, LinkedIn, localização) */
+    .contato-link {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 0.6rem 0;
+      border-bottom: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+
+    .contato-link:hover { color: var(--accent); }
+
+    /* Formulário */
+    .formulario {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .campo-grupo { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .campo-grupo label {
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: var(--text);
+    }
+
+    /* Inputs e textarea */
+    .campo-grupo input,
+    .campo-grupo textarea {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text);
+      font-family: Arial, sans-serif;
+      font-size: 0.93rem;
+      padding: 0.6rem 0.8rem;
+      outline: none;
+      transition: border-color 0.2s;
+      resize: vertical;
+    }
+
+    .campo-grupo input:focus,
+    .campo-grupo textarea:focus {
+      border-color: var(--accent);
+    }
+
+    /* Campo com erro de validação */
+    .campo-grupo input.erro,
+    .campo-grupo textarea.erro {
+      border-color: #e74c3c;
+    }
+
+    /* Mensagem de erro (oculta por padrão) */
+    .msg-erro {
+      font-size: 0.78rem;
+      color: #e74c3c;
+      display: none;
+    }
+
+    .msg-erro.visivel { display: block; }
+
+    /* Botão enviar */
+    .btn-enviar {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      padding: 0.7rem 1.6rem;
+      border-radius: 4px;
+      font-size: 0.93rem;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: opacity 0.2s;
+    }
+
+    .btn-enviar:hover { opacity: 0.85; }
+
+    /* 
+       MODAL DE CONFIRMAÇÃO
+        */
+    .modal-fundo {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-fundo.aberto { display: flex; }
+
+    .modal-caixa {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2rem 2.5rem;
+      max-width: 360px;
+      width: 90%;
+      text-align: center;
+    }
+
+    .modal-caixa .icone { font-size: 2.5rem; margin-bottom: 0.75rem; }
+
+    .modal-caixa h3 {
+      font-size: 1.2rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-caixa p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .btn-fechar {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: opacity 0.2s;
+    }
+
+    .btn-fechar:hover { opacity: 0.85; }
+
+    /* 
+       RODAPÉ
+        */
+    footer {
+      background: var(--nav-bg);
+      color: var(--nav-text);
+      text-align: center;
+      padding: 1.2rem;
+      font-size: 0.83rem;
+    }
+
+    /* 
+       RESPONSIVIDADE — tela pequena (mobile)
+        */
+    @media (max-width: 680px) {
+      /* Oculta links de desktop, exibe botão hamburguer */
+      .nav-links  { display: none; }
+      #btn-menu   { display: block; }
+
+      /* Formulário de contato em coluna única */
+      .contato-grid { grid-template-columns: 1fr; }
+
+      /* Sobre mim centralizado em mobile */
+      .sobre-grid   { flex-direction: column; align-items: center; text-align: center; }
+      .info-linha   { justify-content: center; }
+
+      section { padding: 80px 1.2rem 50px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 
+       NAVEGAÇÃO FIXA — presente em todas as seções
+        -->
+  <nav>
+    <!-- Menu de navegação por âncoras (desktop) -->
+    <ul class="nav-links">
+      <li><a href="#sobre"     class="ativo">Sobre mim</a></li>
+      <li><a href="#formacao"            >Formação</a></li>
+      <li><a href="#portfolio"           >Portfólio</a></li>
+      <li><a href="#contato"             >Contato</a></li>
+    </ul>
+
+    <!-- Botões de controle -->
+    <div style="display:flex; align-items:center; gap:0.8rem;">
+      <button id="btn-tema">🌙 Tema</button>
+      <button id="btn-menu" aria-label="Abrir menu">&#9776;</button>
+    </div>
+  </nav>
+
+  <!-- Menu mobile (aparece ao clicar no hamburguer) -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="#sobre"     onclick="fecharMenuMobile()">Sobre mim</a>
+    <a href="#formacao"  onclick="fecharMenuMobile()">Formação</a>
+    <a href="#portfolio" onclick="fecharMenuMobile()">Portfólio</a>
+    <a href="#contato"   onclick="fecharMenuMobile()">Contato</a>
+  </div>
+
+  <!--
+       SEÇÃO 1 — SOBRE MIM
+        -->
+  <section id="sobre">
+    <div class="container">
+      <h2>Sobre mim</h2>
+
+      <div class="sobre-grid">
+        <!-- Avatar representativo -->
+        <div class="avatar">👨‍💻</div>
+
+        <div class="sobre-info">
+          <h1>Gustavo José da Luz</h1>
+          <p class="cargo">Assistente de TI II</p>
+
+          <p>
+            Profissional de TI com foco em segurança da informação e infraestrutura.
+            Apaixonado por tecnologia e pela proteção de ativos digitais, busco
+            constantemente me aprimorar para oferecer suporte técnico de qualidade
+            e soluções eficientes para os desafios do ambiente corporativo. 
+            Nas horas vagas, meus hobbies incluem jogar futebol, ler livros de finanças, 
+            fazer cursos para me manter atualizado e jogar videogame.
+          </p>
+
+          <!-- Informações rápidas -->
+          <div class="info-linha">
+            <span>📍 Curitiba, PR</span>
+            <span>🔐 Segurança da Informação</span>
+            <span>🎓 Em graduação</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+       SEÇÃO 2 — FORMAÇÃO
+       -->
+  <section id="formacao">
+    <div class="container">
+      <h2>Formação</h2>
+
+      <!-- Graduação em andamento -->
+      <div class="formacao-item">
+        <h3>Graduação em Segurança da Informação</h3>
+        <p class="inst">Centro Universitário Internacional — UNINTER</p>
+        <p class="periodo">2024 — Em andamento · Curitiba, PR</p>
+      </div>
+
+      <!-- Certificação CISCO -->
+      <div class="formacao-item">
+        <h3>Analista de Cibersegurança Junior</h3>
+        <p class="inst">CISCO Networking Academy</p>
+        <p class="periodo">2024 · Certificação Internacional</p>
+      </div>
+
+      <!-- Ensino médio -->
+      <div class="formacao-item">
+        <h3>Ensino Médio</h3>
+        <p class="inst">Formação básica completa</p>
+        <p class="periodo">Concluído</p>
+      </div>
+
+      <!-- Habilidades técnicas -->
+      <p class="subtitulo">Habilidades Técnicas</p>
+      <div class="habilidades-grid">
+        <div class="habilidade">🛡️ Cibersegurança</div>
+        <div class="habilidade">🌐 Redes de Computadores</div>
+        <div class="habilidade">🖥️ Suporte Técnico (TI)</div>
+        <div class="habilidade">🔍 Análise de Vulnerabilidades</div>
+      </div>
+
+      <!-- Idiomas com nível visual -->
+      <p class="subtitulo">Idiomas</p>
+
+      <div class="idioma">
+        <span class="idioma-nome">🇧🇷 Português</span>
+        <div class="nivel-barra"><div class="nivel-fill" style="width:100%"></div></div>
+        <span class="nivel-texto">Nativo</span>
+      </div>
+
+      <div class="idioma">
+        <span class="idioma-nome">🇺🇸 Inglês</span>
+        <div class="nivel-barra"><div class="nivel-fill" style="width:30%"></div></div>
+        <span class="nivel-texto">Básico</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 
+       SEÇÃO 3 — PORTFÓLIO
+        -->
+  <section id="portfolio">
+    <div class="container">
+      <h2>Portfólio</h2>
+
+      <!-- Projeto 1 -->
+      <div class="formacao-item">
+        <h3>Hub de Centralização de Serviços de TI</h3>
+        <p class="periodo">Projeto Corporativo de Infraestrutura</p>
+        <p style="margin: 0.8rem 0; font-size: 0.95rem; color: var(--muted); line-height: 1.5;">
+          Desenvolvimento e implantação de um portal unificado (HUB) para centralizar todos os serviços e ferramentas de TI utilizados na empresa, otimizando o acesso e a produtividade dos colaboradores.
+        </p>
+        <span style="display:inline-block; font-size:0.8rem; padding: 4px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--muted);">🔒 Acesso Restrito (Confidencial)</span>
+      </div>
+
+      <!-- Projeto 2 -->
+      <div class="formacao-item">
+        <h3>ChatBot para Abertura de Chamados (GLPI)</h3>
+        <p class="periodo">Automação de Suporte Técnico</p>
+        <p style="margin: 0.8rem 0; font-size: 0.95rem; color: var(--muted); line-height: 1.5;">
+          Criação e integração de um ChatBot voltado para o sistema GLPI, visando facilitar e automatizar a abertura de chamados técnicos de forma rápida e intuitiva para os usuários internos.
+        </p>
+        <span style="display:inline-block; font-size:0.8rem; padding: 4px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--muted);">🔒 Acesso Restrito (Confidencial)</span>
+      </div>
+
+      <!-- Projeto 3 -->
+      <div class="formacao-item">
+        <h3>Monitoramento Avançado com Grafana</h3>
+        <p class="periodo">Visualização de Dados e Monitoramento</p>
+        <p style="margin: 0.8rem 0; font-size: 0.95rem; color: var(--muted); line-height: 1.5;">
+          Implantação e configuração do software Grafana para a construção de dashboards dinâmicos, permitindo o acompanhamento em tempo real, visualização de métricas e monitoramento contínuo dos empreendimentos.
+        </p>
+        <span style="display:inline-block; font-size:0.8rem; padding: 4px 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--muted);">🔒 Acesso Restrito (Confidencial)</span>
+      </div>
+
+      <!-- Projeto 4 -->
+      <div class="formacao-item">
+        <h3>Meu Portfólio Pessoal</h3>
+        <p class="periodo">Desenvolvimento Web Front-end</p>
+        <p style="margin: 0.8rem 0; font-size: 0.95rem; color: var(--muted); line-height: 1.5;">
+          Desenvolvimento deste currículo online utilizando HTML5, CSS3 e JavaScript puro (Vanilla), aplicando conceitos de responsividade, validação de formulários e manipulação de DOM.
+        </p>
+        <a href="https://github.com/Gustafe1010/Portf-lio-pessoal.git" target="_blank" style="color: var(--accent); font-weight: bold; text-decoration: none; font-size: 0.9rem;">
+          🔗 Ver Código no GitHub
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 
+       SEÇÃO 4 — CONTATO
+        -->
+  <section id="contato">
+    <div class="container">
+      <h2>Contato</h2>
+
+      <div class="contato-grid">
+
+        <!-- Informações e links de contato -->
+        <div class="contato-info">
+          <h3>Fale comigo</h3>
+
+          <a href="mailto:gustavodaluz123@hotmail.com" class="contato-link">
+            ✉️ gustavodaluz123@hotmail.com
+          </a>
+
+          <a href="https://br.linkedin.com/in/gustavoluz01" target="_blank" rel="noopener" class="contato-link">
+            💼 linkedin.com/in/gustavoluz01
+          </a>
+
+          <a class="contato-link">
+            📍 Curitiba, Paraná — Brasil
+          </a>
+        </div>
+
+        <!-- Formulário com validação em JavaScript -->
+        <div class="formulario">
+
+          <!-- Campo: Nome -->
+          <div class="campo-grupo">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" placeholder="Seu nome completo" />
+            <span class="msg-erro" id="erro-nome">Por favor, informe seu nome.</span>
+          </div>
+
+          <!-- Campo: E-mail -->
+          <div class="campo-grupo">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" placeholder="seuemail@exemplo.com" />
+            <span class="msg-erro" id="erro-email">Informe um e-mail válido (ex: usuario@dominio.com).</span>
+          </div>
+
+          <!-- Campo: Mensagem -->
+          <div class="campo-grupo">
+            <label for="mensagem">Mensagem</label>
+            <textarea id="mensagem" rows="5" placeholder="Escreva sua mensagem..."></textarea>
+            <span class="msg-erro" id="erro-mensagem">Por favor, escreva uma mensagem.</span>
+          </div>
+
+          <button class="btn-enviar" onclick="enviarFormulario()">Enviar mensagem</button>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 
+       RODAPÉ
+        -->
+  <footer>
+    <p>Gustavo José da Luz &copy; 2025 &mdash; Portfólio desenvolvido com HTML5, CSS3 e JavaScript</p>
+  </footer>
+
+  <!-- 
+       MODAL DE CONFIRMAÇÃO DE ENVIO
+        -->
+  <div class="modal-fundo" id="modal">
+    <div class="modal-caixa">
+      <div class="icone">✅</div>
+      <h3>Mensagem enviada!</h3>
+      <p>Obrigado pelo contato, <strong id="modal-nome"></strong>.<br>
+         Responderei o mais breve possível.</p>
+      <button class="btn-fechar" onclick="fecharModal()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- 
+       JAVASCRIPT — Interações da página
+        -->
+  <script>
+
+    /* --------------------------------------------------
+       1. ALTERNÂNCIA DE TEMA CLARO / ESCURO
+       Salva a preferência no localStorage para que persista
+       ao recarregar a página.
+    -------------------------------------------------- */
+    const btnTema = document.getElementById('btn-tema');
+
+    // Verifica se há tema salvo e aplica
+    if (localStorage.getItem('tema') === 'escuro') {
+      document.body.classList.add('dark');
+      btnTema.textContent = '☀️ Tema';
+    }
+
+    btnTema.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      const escuro = document.body.classList.contains('dark');
+      btnTema.textContent = escuro ? '☀️ Tema' : '🌙 Tema';
+      localStorage.setItem('tema', escuro ? 'escuro' : 'claro');
+    });
+
+
+    /* --------------------------------------------------
+       2. MENU MOBILE — hamburguer
+       Exibe ou oculta o menu de navegação em telas pequenas.
+    -------------------------------------------------- */
+    document.getElementById('btn-menu').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('aberto');
+    });
+
+    // Fecha o menu ao clicar em qualquer link (chamado pelo onclick inline)
+    function fecharMenuMobile() {
+      document.getElementById('mobile-menu').classList.remove('aberto');
+    }
+
+
+    /* --------------------------------------------------
+       3. LINK ATIVO NO MENU
+       Destaca automaticamente o link correspondente à seção
+       visível na tela usando IntersectionObserver.
+    -------------------------------------------------- */
+    const secoes   = document.querySelectorAll('section[id]');
+    const linksNav = document.querySelectorAll('.nav-links a');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          linksNav.forEach(l => l.classList.remove('ativo'));
+          const link = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
+          if (link) link.classList.add('ativo');
+        }
+      });
+    }, { threshold: 0.4 });
+
+    secoes.forEach(s => observer.observe(s));
+
+
+    /* --------------------------------------------------
+       4. VALIDAÇÃO E ENVIO DO FORMULÁRIO DE CONTATO
+       - Verifica se nome, e-mail (formato regex) e mensagem
+         estão preenchidos corretamente.
+       - Se válido: limpa os campos e exibe o modal de confirmação.
+       - Se inválido: exibe as mensagens de erro nos campos.
+    -------------------------------------------------- */
+    function enviarFormulario() {
+      const nome     = document.getElementById('nome');
+      const email    = document.getElementById('email');
+      const mensagem = document.getElementById('mensagem');
+      let valido = true;
+
+      /* Valida nome */
+      if (nome.value.trim() === '') {
+        marcarErro(nome, 'erro-nome');
+        valido = false;
+      } else {
+        limparErro(nome, 'erro-nome');
+      }
+
+      /* Valida e-mail com expressão regular */
+      const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regexEmail.test(email.value.trim())) {
+        marcarErro(email, 'erro-email');
+        valido = false;
+      } else {
+        limparErro(email, 'erro-email');
+      }
+
+      /* Valida mensagem */
+      if (mensagem.value.trim() === '') {
+        marcarErro(mensagem, 'erro-mensagem');
+        valido = false;
+      } else {
+        limparErro(mensagem, 'erro-mensagem');
+      }
+
+      /* Se todos os campos são válidos: simula o envio */
+      if (valido) {
+        document.getElementById('modal-nome').textContent = nome.value.trim();
+        nome.value     = '';
+        email.value    = '';
+        mensagem.value = '';
+        document.getElementById('modal').classList.add('aberto');
+      }
+    }
+
+    /* Marca um campo como inválido e exibe a mensagem de erro */
+    function marcarErro(campo, idErro) {
+      campo.classList.add('erro');
+      document.getElementById(idErro).classList.add('visivel');
+    }
+
+    /* Remove o estado de erro de um campo */
+    function limparErro(campo, idErro) {
+      campo.classList.remove('erro');
+      document.getElementById(idErro).classList.visible = false;
+      document.getElementById(idErro).classList.remove('visivel');
+    }
+
+    /* Remove o erro assim que o usuário começa a digitar */
+    ['nome', 'email', 'mensagem'].forEach(id => {
+      document.getElementById(id).addEventListener('input', function () {
+        limparErro(this, 'erro-' + id);
+      });
+    });
+
+
+    /* --------------------------------------------------
+       5. FECHAR
+       Fecha ao clicar no botão "Fechar" ou no fundo escuro.
+    -------------------------------------------------- */
+    function fecharModal() {
+      document.getElementById('modal').classList.remove('aberto');
+    }
+
+    document.getElementById('modal').addEventListener('click', function (e) {
+      if (e.target === this) fecharModal();
+    });
+
+  </script>
+</body>
+</html>
